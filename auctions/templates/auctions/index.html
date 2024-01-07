@@ -1,0 +1,39 @@
+{% extends "auctions/layout.html" %}
+
+{% block title %}
+    Welcome!
+{% endblock %}
+
+
+{% block body %}
+    <h2>Active Listings</h2>
+    {% for auction in auctions %}
+    <div class="container text-center position-relative">
+        {% if user.is_authenticated %}
+        <a href="{% url 'listing' auction.id user.username %}">
+            <span class="stretched-link "></span>
+        </a>
+        {% else %}
+        <a href="{% url 'listing_user_not_signed_in' auction.id %}">
+            <span class="stretched-link "></span>
+        </a>
+        {% endif %}
+        <div class="row">
+            <div class="col">
+                <img src="{{ auction.url }}" class="img-fluid img-thumbnail" alt="item photo">
+            </div>
+            <div class="col">
+                {{ auction.title }}
+            </div>
+            <div class="col">
+                {{ auction.description }}
+            </div>
+            <div class="col">
+                {{ auction.price }}
+            </div>
+        </div>
+    </div> 
+    <hr style="height:2px;border: width 1px;color:blue;background-color:blue">    
+    {% endfor %}
+
+{% endblock %}

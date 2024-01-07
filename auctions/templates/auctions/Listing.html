@@ -1,0 +1,75 @@
+{% extends "auctions/layout.html" %}
+
+{% block title %}
+    {{ listing.title }}
+{% endblock %}
+
+{% block body %}
+    {% if listing.closed == True %}
+    <div class="p-3 mb-2 bg-info text-white"><h3>This auction has ended. This listing is closed</h3></div>
+    {% endif %}
+
+    {% if user.is_authenticated %}
+        {% if listing.closed == True %}
+            {% if user == listing_creator %}
+                {% if winner ==  "winner is None!" %}
+                <div class="p-3 mb-2 bg-danger text-white"><h3>There were no bids on the auction. The auction was closed without a winner.</h3></div>
+                {% else %}
+                <div class="p-3 mb-2 bg-info text-white"><h3>The auction was won by <em>{{ winner }}</em></h3></div>
+                {% endif %}
+            {% elif user == winner %}
+            <div class="p-3 mb-2 bg-success text-white"><h3>You are the winner of this listing. Congratulations!</h3></div>
+            {% endif %}
+        {% endif %} 
+    {% endif %} 
+ 
+    <h2>{{ listing.title }}</h2>
+    {% if listing.closed == False %}
+
+    {% if user.is_authenticated %}
+        {% if user == listing_creator %}
+        <div class="d-grid gap-2">
+            <button type="submit" class="btn btn-success" onclick="location.href='{% url 'close_auction_btn' user.username listing.id %}'">Close The Auction</button>
+            <button type="submit" class="btn btn-info" onclick="location.href='{% url 'watchlist_add_comm_btn' user.username listing.id %}'">Add Comment</button>
+        </div>
+        {% else %}
+        <div class="d-grid gap-2">
+            {% if listing in current_watchlist %}
+            <button type="submit" class="btn btn-warning" onclick="location.href='{% url 'watchlist_rm_btn' user.username listing.id %}'">Remove from watchlist</button>
+            {% else %}
+            <button type="submit" class="btn btn-info" onclick="location.href='{% url 'watchlist_add_btn' user.username listing.id %}'">Add to watchlist</button>
+            {% endif %}
+            <button type="submit" class="btn btn-info" onclick="location.href='{% url 'bid' user.username listing.id %}'">Place Bid</button>
+            <button type="submit" class="btn btn-info" onclick="location.href='{% url 'watchlist_add_comm_btn' user.username listing.id %}'">Add Comment</button>
+        </div>
+        {% endif %}
+    {% endif %}
+
+    {% endif %}
+
+    <h6>Posted by: {{ listing_creator }}</h6>
+
+    <h6>Description: {{ listing.description }}</h6>
+
+    <h6>Starting price: {{ listing.price }}</h6>
+
+    {% if listing.closed == False %}
+    <h6>Current price: {{ max }}</h6>
+    {% else %}
+    <h6>Closing price: {{ max }}</h6>
+    {% endif %}
+
+    <img src="{{ listing.url }}" class="img-fluid img-thumbnail" alt="item photo">
+    <br>
+    <br>
+    <h6>Comments:</h6>
+    {% for comment in comments %}
+    <hr>
+    <em>Author:</em> {{ comment.user }}
+    <br>
+    <em>Title:</em> {{ comment.title }}
+    <br>
+    <em>Comment:</em> {{ comment.text }}
+    <hr>
+    {% endfor %}
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends "auctions/layout.html" %}
+
+{% block title %}
+    {{ category_name.category }}
+{% endblock %}
+
+{% block body %}
+<h2>{{ category_name.category }}</h2>
+
+    {% for auction in category %}
+    <div class="container text-center position-relative">
+        <a href="{% url 'listing' auction.id user.username %}">
+            <span class="stretched-link "></span>
+        </a>
+        <div class="row">
+            <div class="col">
+                <img src="{{ auction.url }}" class="img-thumbnail" alt="cat">
+            </div>
+            <div class="col">
+                {{ auction.title }}
+            </div>
+            <div class="col">
+                {{ auction.description }}
+            </div>
+            <div class="col">
+                {{ auction.price }}
+            </div>
+        </div>
+    </div>
+    <hr style="height:2px;border: width 1px;color:blue;background-color:blue">
+    {% endfor %}    
+{% endblock %}

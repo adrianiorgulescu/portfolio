@@ -1,0 +1,22 @@
+{% extends "auctions/layout.html" %}
+
+{% block title %}
+    Bid
+{% endblock %}
+
+{% block body %}
+    <h2>Bid:</h2>
+
+    <h6>Description: {{ listing.description }}</h6>
+
+    <h6>Starting price: {{ start_price }}</h6>
+
+    <h6>Current price: {{ max }}</h6>
+
+    <form action="{% url 'bid' user.username listing.id %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Submit">
+    </form>
+
+{% endblock %}

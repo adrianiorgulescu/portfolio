@@ -1,0 +1,40 @@
+{% extends "auctions/layout.html" %}
+
+{% block title %}
+    Watchlist
+{% endblock %}
+
+{% block body %}
+    <h2>Current listings in your watchlist:</h2>
+    {% if user.is_authenticated %}
+        {% for auction in current_watchlist %}
+        <div class="container text-center position-relative">
+            <a href="{% url 'listing' auction.id user.username %}">
+                <span class="stretched-link "></span>
+            </a>
+            <div class="row">
+                <div class="col">
+                    <img src="{{ auction.url }}" class="img-thumbnail" alt="cat">
+                </div>
+                <div class="col">
+                    {{ auction.title }}
+                </div>
+                <div class="col">
+                    {{ auction.description }}
+                </div>
+                <div class="col">
+                    {{ auction.price }}
+                </div>
+            </div>
+        </div>
+        <div class="d-grid gap-2">
+            <button type="submit" class="btn btn-warning" onclick="location.href='{% url 'watchlist_rm_btn' user.username auction.id %}'">Remove from watchlist</button>
+            <button class="btn btn-light" href="#" type="button">Place Bid</button>
+        </div>
+        <hr style="height:2px;border: width 1px;color:blue;background-color:blue">
+        {% endfor %}
+        {% else %}
+        <p>Please log in to view this information!</p>
+    {% endif %}
+
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends "auctions/layout.html" %}
+
+{% block title %}
+    Add Comment 
+{% endblock %}
+
+{% block body %}
+    <h6>Add comment to listing <em>{{ listing.title }}</em></h6>
+
+    <form action="{% url 'watchlist_add_comm_btn' user.username listing.id %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Submit">
+    </form>
+
+{% endblock %}
