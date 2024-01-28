@@ -1,0 +1,51 @@
+{% extends "network/layout.html" %}
+{% load static %}
+
+{% block body %}
+<input type="hidden" id="current_user_id" value="{{ user.id }}">
+<h3 class="p-2 m-1" id="title_all_posts">Following</h3>
+{% if user.is_authenticated %}
+
+{% for post in page_obj %}
+<div class="p-3 m-2 bg-light border" id="postX_{{ post.id }}">
+    <p id='user_click_{{ post.user.id }}'><b>{{ post.user }}</b></p>
+    <p>{{ post.content }}</p>
+    <p style="color:gray; font-size: 13px;">{{ post.timestamp }}</p>
+        {% if post.like == null %}
+        <p><span id="heart_has_like_{{ post.id }}"><strong class="adrian">💙</strong> 0</span> 
+            <span id="heart_no_like_{{ post.id }}"><strong class="adrian">🤍</strong> 0</span></p>
+        {% else %}
+        <p><span id="heart_has_like_{{ post.id }}"><strong class="adrian">💙</strong> {{ post.like.count }}</span> 
+            <span id="heart_no_like_{{ post.id }}"><strong class="adrian">🤍</strong> {{ post.like.count }}</span></p>
+        {% endif %}
+</div>
+{% endfor %}
+
+{% endif %}
+
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'network/index.js' %}"></script>
+{% endblock %}
+
+
+

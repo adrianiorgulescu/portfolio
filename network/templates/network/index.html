@@ -1,0 +1,94 @@
+{% extends "network/layout.html" %}
+{% load static %}
+
+{% block body %}
+<input type="hidden" id="current_user_id" value="{{ user.id }}">
+<h3 class="p-2 m-1" id="title_all_posts">All Posts</h3>
+{% if user.is_authenticated %}
+<div class="p-3 m-2 bg-light border" id="new-post">
+    <h4>New Post</h4>
+    <form action="{% url 'index' %}" method="post" id="new-post-form">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="hidden" name="user" class="form-control" value="{{ user.username }}" required=""> 
+        <input type="submit" id="post_submit_button" class="btn btn-primary" name="new_post_submit" value="Submit">
+    </form>
+</div>
+{% endif %} 
+
+{% if user.is_authenticated %}
+
+{% for post in page_obj %}
+<div class="p-3 m-2 bg-light border" id="postX_{{ post.id }}">
+    <p id='user_click_{{ post.user.id }}'><b>{{ post.user }}</b></p>
+    <p id='postcontent_{{ post.id }}'>{{ post.content }}</p>
+    <p style="color:gray; font-size: 13px;">{{ post.timestamp }}</p>
+        {% if post.like == null %}
+        <p><span id="heart_has_like_{{ post.id }}"><strong class="adrian">💙</strong> 0</span> 
+            <span id="heart_no_like_{{ post.id }}"><strong class="adrian">🤍</strong> 0</span></p>
+        {% else %}
+        <p><span id="heart_has_like_{{ post.id }}"><strong class="adrian">💙</strong> {{ post.like.count }}</span> 
+            <span id="heart_no_like_{{ post.id }}"><strong class="adrian">🤍</strong> {{ post.like.count }}</span></p>
+        {% endif %}
+    {% if post.user == user %}
+    <button class="btn btn-sm btn-dark" id="edit_button_{{ post.id }}">Edit</button>
+    {% endif %}
+</div>
+    {% if post.user == user %}
+    <div class="p-3 m-2 bg-light border" id='edit_post_{{ post.id }}'>
+        <h4>Edit Post</h4>
+        <div>
+            <div id="edit-post-form_{{ post.id }}">
+            <textarea id="post-body_{{ post.id }}" name="post-body_{{ post.id }}" class="form-control" max_length="500" rows="2"></textarea>
+            </div>
+                <input type="hidden" name="user" value="{{ post.user }}"> 
+                <input type="hidden" name="postID" value="{{ post.id }}"> 
+                <br>
+                <button class="btn btn-primary btn-sm" id="post_submit_button_{{ post.id }}">Submit</button>
+        </div>
+    </div>
+    {% endif %}
+{% endfor %}
+
+{% else %}
+
+{% for post in page_obj %}
+<div class="p-3 m-2 bg-light border" id="postX_{{ post.id }}">
+    <p id='user_click_{{ post.user.id }}'><b>{{ post.user }}</b></p>
+    <p>{{ post.content }}</p>
+    <p style="color:gray; font-size: 13px;">{{ post.timestamp }}</p>
+        {% if post.like == null %}
+        <p><span id="heart_no_like_{{ post.id }}"><strong class="adrian">🤍</strong> 0</span></p>
+        {% else %}
+        <p><span id="heart_no_like_{{ post.id }}"><strong class="adrian">🤍</strong> {{ post.like.count }}</span></p>
+        {% endif %}
+</div>
+{% endfor %}
+{% endif %} 
+
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'network/index.js' %}"></script>
+{% endblock %}
+
+
+
