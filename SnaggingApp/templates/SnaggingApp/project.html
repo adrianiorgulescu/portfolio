@@ -1,0 +1,48 @@
+{% extends "SnaggingApp/layout.html" %}
+{% load static %}
+
+{% block script %}
+    <script src="{% static 'project.js' %}"></script>
+{% endblock %}
+
+{% block body %}
+{% if user.is_authenticated %}
+    <h3 class="p-2 m-1" id="title_all_posts">Project: {{ current_project.title }}</h3>
+
+    <div class="p-3 m-2 bg-light border" id="#">
+        <h5 class="p-2 m-1" id="#">Description:</h5>
+            <div class="p-3 m-2 bg-light border" id="#">
+            <p id='#'>{{ current_project.description }}</p>
+            </div>
+    </div>
+
+    <!-- To be completed later -->
+    <!--  
+    <div class="p-3 m-2 bg-light border" id="#">
+    <h5 class="p-2 m-1" id="#">My actions:</h5>
+        {% for message in messages %}
+        <div class="p-3 m-2 bg-light border" id="#">
+        <p id='#'><b>{{ message.title }}</b></p>
+        </div>
+        {% endfor %}
+    </div>
+    -->
+
+    <div class="p-3 m-2 bg-light border" id="#">
+    <h5 class="p-2 m-1" id="title_all_posts">Project levels/areas:</h5>
+        {% for level in levels %}
+        <div class="p-3 m-2 bg-light border" id="#">
+        <p class="text-info" id='level_{{ level.id }}'><b>{{ level.title }}</b></p>
+        </div>
+        {% endfor %}
+    </div>
+    
+{% else %}
+<div class="p-3 m-2 bg-light border">
+    <p><b>Welcome to the SnaggingApp</b></p>
+    <p>Please register or log-in if you have an account</p>
+</div>
+{% endif %} 
+
+{% endblock %}
+

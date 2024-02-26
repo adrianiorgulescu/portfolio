@@ -1,0 +1,27 @@
+{% extends "SnaggingApp/layout.html" %}
+{% load static %}
+
+{% block script %}
+    <script src="{% static 'index.js' %}"></script>
+{% endblock %}
+
+{% block body %}
+{% if user.is_authenticated %}
+    <h3 class="p-2 m-1" id="title_all_posts">All Projects</h3>
+    {% for project in projects %}
+    <div class="p-3 m-2 bg-light border">
+        <p id='project_{{ project.id }}'><b>{{ project.title }}</b></p>
+    </div>
+    {% endfor %}
+{% else %}
+<div class="p-3 m-2 bg-light border">
+    <p><b>Welcome to the SnaggingApp</b></p>
+    <p>Please register or log-in if you have an account</p>
+</div>
+{% endif %} 
+
+{% endblock %}
+
+
+
+
