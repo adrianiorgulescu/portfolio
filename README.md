@@ -1,7 +1,17 @@
-# SNAGGING APP
+# SNAGGING APP - The Final Project CS50W
 #### Video Demo:  https://youtu.be/DZC8-fWX8Z0
 
 ## Introduction
+
+This represents the CS50W final project. In this project, the specification was to build a web application. The nature of the application was up to me, subject to a few requirements:
+
+>The web application must be sufficiently distinct from the other projects in this course.
+>
+>The web application must utilize Django (including at least one model) on the back-end and JavaScript on the front-end.
+>
+>The web application must be mobile-responsive.
+
+I decided to build a Snagging Application. I was entirely responsible for the development of this project, including its architecture, look, structure, programming, etc. 
 
 The Snagging App web application is a tool designed to streamline the process of identifying, documenting, and managing issues or "snags" within a construction or project environment. The term "snagging" refers to the identification of defects, deficiencies, or problems that need to be addressed before a project can be considered complete or handed over.
 
@@ -24,16 +34,6 @@ Key features of a snagging web application may include all of the following, how
 >Integration with Other Tools: Integration capabilities with other project management tools or systems can enhance overall efficiency by eliminating duplicate data entry and ensuring consistency across platforms.
 
 By providing a centralized and digital platform for snag identification and resolution, snagging web applications contribute to smoother project completion and improved quality control in construction and other industries.
-
-## Distinctiveness and Complexity
-
->In my opinion, the project satisfies the distinctiveness and complexity requirements as mentioned in the Capstone project requirements given the following: 
->
-> - The web app I developed (Snagging App) is providing a solution to a distinct real-life problem in the construction industry: "the snagging process";
->
-> - The project represents a tool that serves a need for my current job. I currently work in the construction industry and the snagging process within the organization I work for is currently managed in a more traditional manner (i.e. via excel forms and photos shared via email); Thus the project represents an application that serves a real need within the construction industry;
->
-> - I consider the project to be fairly complex due to the use of the html "canvas" to render the pdf files and to record the position of the pinpoints on plan; None of the previous projects part of the CS50W used this method and it required a lot of research from my side; Further to this, the project requires access to the user's device camera in order to record the snag photos and evidence and save them in the database - this is also a function that was not used in the first 4 projects of the CS50W course and which also required a lot of research from my side in order to implement correctly.
 
 ## How to Use the App
 
